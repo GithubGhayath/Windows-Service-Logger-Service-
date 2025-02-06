@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Linq;
+using System.ServiceProcess;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace MyFirstWindowsService
+{
+    public partial class Service1 : ServiceBase
+    {
+        private string _FilePath = @"c:/LogService";
+        public Service1()
+        {
+            InitializeComponent();
+        }
+
+        protected override void OnStart(string[] args)
+        {
+            string Text = $"This service running start at: {DateTime.Now.ToString("G")}";
+
+            if(!File.Exists(this._FilePath))
+            {
+                File.Create(this._FilePath);
+                clsHelper.WriteInFile(_FilePath, Text, false);
+            }
+            else
+                clsHelper.WriteInFile(_FilePath, Text, true);
+
+        }
+
+        protected override void OnStop()
+        {
+            string Text = $"This service stopped at: {DateTime.Now.ToString("G")}";
+            clsHelper.WriteInFile(this._FilePath, Text, true);
+        }
+    }
+}

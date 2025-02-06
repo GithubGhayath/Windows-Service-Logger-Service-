@@ -1,0 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+namespace MyFirstWindowsService
+{
+    public static class clsHelper
+    {
+        public static void WriteInFile(string FilePath, string Text, bool AppendMode)
+        {
+            using(StreamWriter writer = new StreamWriter(FilePath,AppendMode))
+            {
+                writer.WriteLine(Text);
+            }
+        }
+
+
+    }
+}
